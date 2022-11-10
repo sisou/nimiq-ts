@@ -1,0 +1,26 @@
+{
+  "name": "nimiq-ts",
+  "version": "0.0.1",
+  "description": "Typescript library for Nimiq",
+  "source": "src/index.ts",
+  "main": "dist/Nimiq.js",
+  "module": "dist/Nimiq.mjs",
+  "types": "dist/Nimiq.d.ts",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@nimiq/core": "^1.6.0",
+    "@types/node": "^18.11.9",
+    "esbuild": "^0.15.13",
+    "rollup": "^3.2.5",
+    "rollup-plugin-dts": "^5.0.0",
+    "rollup-plugin-esbuild": "^5.0.0",
+    "typescript": "^4.8.4"
+  }
+}
