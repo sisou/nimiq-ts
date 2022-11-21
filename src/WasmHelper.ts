@@ -1,4 +1,10 @@
-import { BufferUtils } from './BufferUtils';
+export type WasmSource = BufferSource | WebAssembly.Module | Promise<BufferSource | WebAssembly.Module>;
+
+let loadModule: (() => WasmSource) | undefined;
+
+export function setWasmInit(init: () => WasmSource) {
+    loadModule = init
+}
 
 export class WasmHelper {
     private static _module: any;
@@ -6,10 +12,15 @@ export class WasmHelper {
     static async doImport(): Promise<void> {
         if (WasmHelper._module) return;
 
-        const moduleSettings: Record<string, any> = {};
+        if (!loadModule) throw new Error('No WebAssembly.Module available');
 
-        const wasmBase64 = (await import('./wasm/wasm.base64')).default;
-        moduleSettings.wasmBinary = BufferUtils.fromBase64(wasmBase64);
+        const moduleSettings: Record<string, any> = {};
+        const wasmSource = await loadModule();
+        if (wasmSource instanceof WebAssembly.Module) {
+            moduleSettings.wasmModule = wasmSource;
+        } else {
+            moduleSettings.wasmBinary = wasmSource;
+        }
 
         const { init } = await import('./wasm/worker-wasm');
 

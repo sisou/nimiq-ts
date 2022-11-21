@@ -11,8 +11,10 @@ async function main() {
     // console.log(privKeyJS.toHex());
     // console.log(privKeyTS.toHex());
 
+    await NimiqTS.initialize();
+
     const pubKeyJS = NimiqJS.PublicKey.derive(privKeyJS);
-    const pubKeyTS = await NimiqTS.PublicKey.derive(privKeyTS);
+    const pubKeyTS = NimiqTS.PublicKey.derive(privKeyTS);
 
     console.assert(pubKeyJS.toHex() === pubKeyTS.toHex(), "Public Keys are not equal");
     // console.log(pubKeyJS.toHex());

@@ -1,19 +1,10 @@
-export { Address } from "./Address";
-export { ArrayUtils } from "./ArrayUtils";
-export { BufferUtils } from "./BufferUtils";
-export { CRC8 } from "./CRC8";
-export { CryptoUtils } from "./CryptoUtils";
-export { Entropy } from "./Entropy";
-export { ExtendedPrivateKey } from "./ExtendedPrivateKey";
-export { Hash } from "./Hash";
-// export { KeyPair } from "./KeyPair";
-export { MnemonicUtils } from "./MnemonicUtils";
-export { NumberUtils } from "./NumberUtils";
-export { PeerId } from "./PeerId";
-export { PrivateKey } from "./PrivateKey";
-export { PublicKey } from "./PublicKey";
-export { Secret } from "./Secret";
-export { SerialBuffer } from "./SerialBuffer";
-export { Serializable } from "./Serializable";
-export { StringUtils } from "./StringUtils";
-export { WasmHelper } from "./WasmHelper";
+import nimiqWasm from "./wasm/worker-wasm.wasm";
+import { setWasmInit, WasmHelper, WasmSource } from "./WasmHelper";
+setWasmInit(() => nimiqWasm());
+
+export * from "./lib";
+
+export async function initialize(options?: { wasm: WasmSource }) {
+	if (options?.wasm) console.warn('Calling initialize() with options.wasm is not necessary for the standard version of this library, as the WASM is already included.');
+	return WasmHelper.doImport();
+};

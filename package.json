@@ -3,9 +3,22 @@
   "version": "0.0.1",
   "description": "Typescript library for Nimiq",
   "source": "src/index.ts",
-  "main": "dist/Nimiq.js",
-  "module": "dist/Nimiq.mjs",
-  "types": "dist/Nimiq.d.ts",
+  "main": "./dist/standard/umd/index.js",
+  "exports": {
+    ".": {
+      "node": "./dist/node/cjs/index.js",
+      "import": "./dist/standard/es/index.js",
+      "default": "./dist/standard/cjs/index.js"
+    },
+    "./slim": {
+      "node": "./dist/node/cjs/index.js",
+      "import": "./dist/slim/es/index_slim.js",
+      "default": "./dist/slim/cjs/index_slim.js"
+    },
+    "./nimiq.wasm": "./dist/nimiq.wasm",
+    "./package.json": "./package.json"
+  },
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c"
   },
@@ -16,9 +29,11 @@
   "dependencies": {},
   "devDependencies": {
     "@nimiq/core": "^1.6.0",
+    "@rollup/plugin-wasm": "^6.0.1",
     "@types/node": "^18.11.9",
     "esbuild": "^0.15.13",
     "rollup": "^3.2.5",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-dts": "^5.0.0",
     "rollup-plugin-esbuild": "^5.0.0",
     "typescript": "^4.8.4"

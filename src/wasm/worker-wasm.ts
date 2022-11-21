@@ -1319,7 +1319,10 @@ export function init(Module) {
             return ret
         }
 
-        function getBinary() {
+        function getBinaryModule() {
+            if (Module["wasmModule"]) {
+                return Module["wasmModule"]
+            }
             var binary;
             if (Module["wasmBinary"]) {
                 binary = Module["wasmBinary"];
@@ -1329,17 +1332,19 @@ export function init(Module) {
             } else {
                 throw "on the web, we need the wasm binary to be preloaded and set on Module['wasmBinary']. emcc.py will do that for you when generating HTML (but not JS)"
             }
-            return binary
+            return WebAssembly.compile(binary)
         }
 
-        function getBinaryPromise() {
-            if (!Module["wasmBinary"] && typeof fetch === "function") {
+        function getBinaryModulePromise() {
+            if (!Module["wasmModule"] && !Module["wasmBinary"] && typeof fetch === "function") {
                 return fetch(wasmBinaryFile).then(function(response) {
-                    return response.arrayBuffer()
+                    return response.arrayBuffer().then(function(buf) {
+                        return WebAssembly.compile(buf)
+                    })
                 })
             }
             return new Promise(function(resolve, reject) {
-                resolve(getBinary())
+                resolve(getBinaryModule())
             })
         }
 
@@ -1392,10 +1397,10 @@ export function init(Module) {
                 }
             }
             Module["printErr"]("asynchronously preparing wasm");
-            getBinaryPromise().then(function(binary) {
-                return WebAssembly.instantiate(binary, info)
-            }).then(function(output) {
-                receiveInstance(output.instance)
+            getBinaryModulePromise().then(function(mod) {
+                return WebAssembly.instantiate(mod, info)
+            }).then(function(instance) {
+                receiveInstance(instance)
             }).catch(function(reason) {
                 Module["printErr"]("failed to asynchronously prepare wasm: " + reason);
                 Module["quit"](1, reason)
