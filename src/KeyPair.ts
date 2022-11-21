@@ -164,8 +164,7 @@ export class KeyPair extends Serializable {
         return this._privateKey.exportEncrypted(key);
     }
 
-    /** @type {number} */
-    get encryptedSize() {
+    get encryptedSize(): number {
         return this._privateKey.encryptedSize;
     }
 

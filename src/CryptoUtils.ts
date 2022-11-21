@@ -81,9 +81,7 @@ export class CryptoUtils {
         return derivedKey;
     }
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     static async otpKdfLegacy(message: Uint8Array, key: Uint8Array, salt: Uint8Array, iterations: number): Promise<Uint8Array> {
         const worker = await CryptoWorker.getInstanceAsync();
         const derivedKey = await worker.kdfLegacy(key, salt, iterations, message.byteLength);

@@ -18,9 +18,6 @@ abstract class Secret extends Serializable {
     static ENCRYPTION_CHECKSUM_SIZE = 4;
     static ENCRYPTION_CHECKSUM_SIZE_V3 = 2;
 
-    /**
-     * @param {Secret.Type} type
-     */
     constructor(type: Secret.Type, purposeId: number) {
         super();
         this._type = type;

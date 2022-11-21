@@ -1,3 +1,4 @@
+export { Account } from "./Account";
 export { Address } from "./Address";
 export { ArrayUtils } from "./ArrayUtils";
 export { BufferUtils } from "./BufferUtils";
@@ -5,8 +6,11 @@ export { CRC8 } from "./CRC8";
 export { CryptoUtils } from "./CryptoUtils";
 export { Entropy } from "./Entropy";
 export { ExtendedPrivateKey } from "./ExtendedPrivateKey";
+export { GenesisConfig } from "./GenesisConfig";
 export { Hash } from "./Hash";
-// export { KeyPair } from "./KeyPair";
+export { KeyPair } from "./KeyPair";
+export { MerklePath } from "./MerklePath";
+export { MerkleTree } from "./MerkleTree";
 export { MnemonicUtils } from "./MnemonicUtils";
 export { NumberUtils } from "./NumberUtils";
 export { PeerId } from "./PeerId";
@@ -15,5 +19,11 @@ export { PublicKey } from "./PublicKey";
 export { Secret } from "./Secret";
 export { SerialBuffer } from "./SerialBuffer";
 export { Serializable } from "./Serializable";
+export { Signature } from "./Signature";
+export { SignatureProof } from "./SignatureProof";
 export { StringUtils } from "./StringUtils";
+export { Transaction } from "./Transaction";
 export { WasmHelper } from "./WasmHelper";
+
+// Must be defined after Entropy
+export { BasicAccount } from "./BasicAccount";

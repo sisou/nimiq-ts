@@ -19,9 +19,7 @@ export abstract class CryptoWorker {
 
     abstract computeArgon2dBatch(inputs: Uint8Array[]): Promise<Uint8Array[]>;
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     abstract kdfLegacy(key: Uint8Array, salt: Uint8Array, iterations: number, outputSize: number): Promise<Uint8Array>;
 
     abstract kdf(key: Uint8Array, salt: Uint8Array, iterations: number, outputSize: number): Promise<Uint8Array>;
@@ -95,9 +93,7 @@ class CryptoWorkerImpl extends CryptoWorker {
 		}
 	}
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     async kdfLegacy(key: Uint8Array, salt: Uint8Array, iterations: number, outputSize: number = Hash.getSize(Hash.Algorithm.ARGON2D)): Promise<Uint8Array> {
 		let stackPtr;
 		const Module = WasmHelper.Module;

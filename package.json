@@ -20,6 +20,8 @@
   },
   "types": "dist/index.d.ts",
   "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node tests/keys.spec.js",
     "build": "rollup -c"
   },
   "files": [

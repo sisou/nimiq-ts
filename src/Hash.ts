@@ -23,8 +23,18 @@ class Hash extends Serializable {
         this._algorithm = algorithm;
     }
 
+    /** @deprecated */
+    static light(arr: Uint8Array): Hash {
+        return Hash.blake2b(arr);
+    }
+
     static blake2b(arr: Uint8Array): Hash {
         return new Hash(Hash.computeBlake2b(arr), Hash.Algorithm.BLAKE2B);
+    }
+
+    /** @deprecated */
+    static hard(arr: Uint8Array): Promise<Hash> {
+        return Hash.argon2d(arr);
     }
 
     static async argon2d(arr: Uint8Array): Promise<Hash> {
@@ -76,7 +86,7 @@ class Hash extends Serializable {
         return this._algorithm;
     }
 
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof Hash && o._algorithm === this._algorithm && super.equals(o);
     }
 

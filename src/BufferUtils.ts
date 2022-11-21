@@ -194,10 +194,6 @@ class BufferUtils {
         return new Uint8Array(buf);
     }
 
-    /**
-     * @param {Uint8Array} buffer
-     * @return {string}
-     */
     static toHex(buffer: Uint8Array): string {
         let hex = '';
         for (let i = 0; i < buffer.length; i++) {

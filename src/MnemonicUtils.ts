@@ -109,9 +109,7 @@ class MnemonicUtils {
         return MnemonicUtils._bitsToMnemonic(bits, wordlist);
     }
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     static entropyToLegacyMnemonic(entropy: string | ArrayBuffer | Uint8Array | Entropy, wordlist?: string[]): string[] {
         wordlist = wordlist || MnemonicUtils.DEFAULT_WORDLIST;
         const normalized = MnemonicUtils._normalizeEntropy(entropy);
@@ -131,9 +129,7 @@ class MnemonicUtils {
         return new Entropy(MnemonicUtils._bitsToEntropy(bits, false));
     }
 
-    /**
-     * @deprecated
-     */
+    /** @deprecated */
     static legacyMnemonicToEntropy(mnemonic: string[] | string, wordlist?: string[]): Entropy {
         if (!Array.isArray(mnemonic)) mnemonic = mnemonic.trim().split(/\s+/g);
         wordlist = wordlist || MnemonicUtils.DEFAULT_WORDLIST;

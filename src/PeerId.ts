@@ -49,9 +49,6 @@ export class PeerId extends Serializable {
             && super.equals(o);
     }
 
-    /**
-     * @override
-     */
     toString(): string {
         return this.toHex();
     }
