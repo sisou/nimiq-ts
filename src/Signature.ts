@@ -77,8 +77,8 @@ export class Signature extends Serializable {
     //     if (a.byteLength !== PartialSignature.SIZE || b.byteLength !== PartialSignature.SIZE) { // TODO: PartialSignature
     //         throw Error('Wrong buffer size.');
     //     }
-	// 	let stackPtr;
 	// 	const Module = WasmHelper.Module;
+	// 	let stackPtr;
 	// 	try {
 	// 		stackPtr = Module.stackSave();
 	// 		const wasmOutSum = Module.stackAlloc(PartialSignature.SIZE);
@@ -103,8 +103,8 @@ export class Signature extends Serializable {
             || privateKey.byteLength !== PrivateKey.SIZE) {
             throw Error('Wrong buffer size.');
         }
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const wasmOutSignature = Module.stackAlloc(Signature.SIZE);
@@ -132,8 +132,8 @@ export class Signature extends Serializable {
     }
 
     static _signatureVerify(publicKey: Uint8Array, message: Uint8Array, signature: Uint8Array): boolean {
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const wasmInPubKey = Module.stackAlloc(publicKey.length);

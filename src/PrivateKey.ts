@@ -56,8 +56,8 @@ export class PrivateKey extends Secret {
             || publicKeysHash.byteLength !== Hash.getSize(Hash.Algorithm.SHA512)) {
             throw Error('Wrong buffer size.');
         }
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const wasmOut = Module.stackAlloc(PublicKey.SIZE);

@@ -142,8 +142,8 @@ class Hash extends Serializable {
     }
 
     static computeBlake2b(input: Uint8Array): Uint8Array {
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const hashSize = Hash.getSize(Hash.Algorithm.BLAKE2B);
@@ -166,8 +166,8 @@ class Hash extends Serializable {
     }
 
     static computeSha256(input: Uint8Array): Uint8Array {
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const hashSize = Hash.getSize(Hash.Algorithm.SHA256);
@@ -187,8 +187,8 @@ class Hash extends Serializable {
     }
 
     static computeSha512(input: Uint8Array): Uint8Array {
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const hashSize = Hash.getSize(Hash.Algorithm.SHA512);

@@ -40,8 +40,8 @@ export abstract class CryptoWorker {
 
 class CryptoWorkerImpl extends CryptoWorker {
     async computeArgon2d(input: Uint8Array): Promise<Uint8Array> {
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const hashSize = Hash.getSize(Hash.Algorithm.ARGON2D);
@@ -65,8 +65,8 @@ class CryptoWorkerImpl extends CryptoWorker {
 
     async computeArgon2dBatch(inputs: Uint8Array[]): Promise<Uint8Array[]> {
         const hashes = [];
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const hashSize = Hash.getSize(Hash.Algorithm.ARGON2D);
@@ -95,8 +95,8 @@ class CryptoWorkerImpl extends CryptoWorker {
 
     /** @deprecated */
     async kdfLegacy(key: Uint8Array, salt: Uint8Array, iterations: number, outputSize: number = Hash.getSize(Hash.Algorithm.ARGON2D)): Promise<Uint8Array> {
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const wasmOut = Module.stackAlloc(outputSize);
@@ -120,8 +120,8 @@ class CryptoWorkerImpl extends CryptoWorker {
 	}
 
     async kdf(key: Uint8Array, salt: Uint8Array, iterations: number, outputSize: number = Hash.getSize(Hash.Algorithm.ARGON2D)): Promise<Uint8Array> {
-		let stackPtr;
 		const Module = WasmHelper.Module;
+		let stackPtr;
 		try {
 			stackPtr = Module.stackSave();
 			const wasmOut = Module.stackAlloc(outputSize);
@@ -157,7 +157,7 @@ class CryptoWorkerImpl extends CryptoWorker {
 	// 	bodyHash: SerialBuffer,
 	// }> {
     //     // The worker only uses a stub genesis config.
-    //     GenesisConfig = { // TODO GenesisConfig
+    //     GenesisConfig = {
     //         GENESIS_HASH: Hash.unserialize(new SerialBuffer(genesisHash)),
     //         NETWORK_ID: networkId
     //     };

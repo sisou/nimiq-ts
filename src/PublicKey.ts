@@ -89,8 +89,8 @@ export class PublicKey extends Serializable {
         if (privateKey.byteLength !== PrivateKey.SIZE) {
             throw Error('Wrong buffer size.');
         }
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const wasmOut = Module.stackAlloc(PublicKey.SIZE);
@@ -121,8 +121,8 @@ export class PublicKey extends Serializable {
         for (let i = 0; i < publicKeys.length; ++i) {
             concatenatedPublicKeys.set(publicKeys[i], i * PublicKey.SIZE);
         }
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const hashSize = Hash.getSize(Hash.Algorithm.SHA512);
@@ -146,8 +146,8 @@ export class PublicKey extends Serializable {
             || publicKeysHash.byteLength !== Hash.getSize(Hash.Algorithm.SHA512)) {
             throw Error('Wrong buffer size.');
         }
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const wasmOut = Module.stackAlloc(PublicKey.SIZE);
@@ -176,8 +176,8 @@ export class PublicKey extends Serializable {
         for (let i = 0; i < publicKeys.length; ++i) {
             concatenatedPublicKeys.set(publicKeys[i], i * PublicKey.SIZE);
         }
-        let stackPtr;
         const Module = WasmHelper.Module;
+        let stackPtr;
         try {
             stackPtr = Module.stackSave();
             const wasmOut = Module.stackAlloc(PublicKey.SIZE);
