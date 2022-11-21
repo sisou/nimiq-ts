@@ -25,7 +25,7 @@ export class SignatureProof {
         }
     }
 
-    static singleSig(publicKey: PublicKey, signature: Signature): SignatureProof {
+    static singleSig(publicKey: PublicKey, signature?: Signature): SignatureProof {
         return new SignatureProof(publicKey, new MerklePath([]), signature);
     }
 
@@ -36,9 +36,9 @@ export class SignatureProof {
 
 	private _publicKey: PublicKey;
 	private _merklePath: MerklePath;
-	private _signature: Signature;
+	private _signature?: Signature;
 
-    constructor(publicKey: PublicKey, merklePath: MerklePath, signature: Signature) {
+    constructor(publicKey: PublicKey, merklePath: MerklePath, signature?: Signature) {
         if (!(publicKey instanceof PublicKey)) throw new Error('Malformed publickKey');
         if (!(merklePath instanceof MerklePath)) throw new Error('Malformed merklePath');
         if (signature && !(signature instanceof Signature)) throw new Error('Malformed signature');
@@ -120,11 +120,11 @@ export class SignatureProof {
         return this._merklePath;
     }
 
-    get signature(): Signature {
+    get signature(): Signature | undefined {
         return this._signature;
     }
 
-    set signature(signature: Signature) {
+    set signature(signature: Signature | undefined) {
         this._signature = signature;
     }
 }

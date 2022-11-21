@@ -99,7 +99,7 @@ export class BasicAccount extends Account {
         try {
             const signatureProof = SignatureProof.unserialize(new SerialBuffer(proof));
             return {
-                signature: signatureProof.signature.toHex(),
+                signature: signatureProof.signature?.toHex(),
                 publicKey: signatureProof.publicKey.toHex(),
                 signer: signatureProof.publicKey.toAddress().toPlain(),
                 pathLength: signatureProof.merklePath.nodes.length

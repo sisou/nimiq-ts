@@ -241,14 +241,14 @@ abstract class Transaction {
         };
     }
 
-    static fromPlain(plain: ReturnType<Transaction["toPlain"]>): Transaction {
+    static fromPlain(plain: Record<string, any>): Transaction {
         if (!plain) throw new Error('Invalid transaction format');
         const format = Transaction.Format.fromAny(plain.format);
         if (!Transaction.FORMAT_MAP.has(format)) throw new Error('Invalid transaction type');
         return Transaction.FORMAT_MAP.get(format)!.fromPlain(plain);
     }
 
-    static fromAny(tx: Transaction | string | ReturnType<Transaction["toPlain"]>): Transaction {
+    static fromAny(tx: Transaction | string | Record<string, any>): Transaction {
         if (tx instanceof Transaction) return tx;
         if (typeof tx === 'object') return Transaction.fromPlain(tx);
         if (typeof tx === 'string') return Transaction.unserialize(new SerialBuffer(BufferUtils.fromHex(tx)));

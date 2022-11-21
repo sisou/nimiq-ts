@@ -33,3 +33,4 @@ export { Transaction } from "./Transaction";
 
 // Must be defined at the end to not cause ordering problems
 export { BasicAccount } from "./BasicAccount";
+export { BasicTransaction } from "./BasicTransaction";
