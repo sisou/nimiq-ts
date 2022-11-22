@@ -80,7 +80,7 @@ export class SignatureProof {
         return PublicKey.SIZE + new MerklePath([]).serializedSize + Signature.SIZE;
     }
 
-    equals(o: SignatureProof): boolean {
+    equals(o: unknown): boolean {
         return o instanceof SignatureProof
             && this._publicKey.equals(o._publicKey)
             && this._merklePath.equals(o._merklePath)

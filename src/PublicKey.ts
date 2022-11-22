@@ -58,7 +58,7 @@ export class PublicKey extends Serializable {
         return PublicKey.SIZE;
     }
 
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof PublicKey && super.equals(o);
     }
 

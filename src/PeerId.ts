@@ -44,7 +44,7 @@ export class PeerId extends Serializable {
         return PeerId.SERIALIZED_SIZE;
     }
 
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof PeerId
             && super.equals(o);
     }

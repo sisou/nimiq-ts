@@ -2,7 +2,7 @@ import { BufferUtils } from "./BufferUtils";
 import { SerialBuffer } from "./SerialBuffer";
 
 export abstract class Serializable {
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof Serializable && BufferUtils.equals(this.serialize(), o.serialize());
     }
 

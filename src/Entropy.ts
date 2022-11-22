@@ -3,7 +3,6 @@ import { ExtendedPrivateKey } from "./ExtendedPrivateKey";
 import { MnemonicUtils } from "./MnemonicUtils";
 import { Secret } from "./Secret";
 import { SerialBuffer } from "./SerialBuffer";
-import { Serializable } from "./Serializable";
 
 export class Entropy extends Secret {
     static SIZE = Secret.SIZE;
@@ -53,7 +52,7 @@ export class Entropy extends Secret {
         this._obj.set(entropy._obj);
     }
 
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof Entropy && super.equals(o);
     }
 }

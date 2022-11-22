@@ -160,7 +160,7 @@ class HashedTimeLockedContract extends Contract {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: Account): boolean {
+    equals(o: unknown): boolean {
         return o instanceof HashedTimeLockedContract
             && this._type === o._type
             && this._balance === o._balance

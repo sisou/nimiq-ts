@@ -140,7 +140,7 @@ class MerklePathNode {
         return this._left;
     }
 
-    equals(o: MerklePathNode): boolean {
+    equals(o: unknown): boolean {
         return o instanceof MerklePathNode
             && this._hash.equals(o.hash)
             && this._left === o.left;

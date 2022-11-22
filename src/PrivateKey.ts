@@ -3,7 +3,6 @@ import { Hash } from "./Hash";
 import { PublicKey } from "./PublicKey";
 import { Secret } from "./Secret";
 import { SerialBuffer } from "./SerialBuffer";
-import { Serializable } from "./Serializable";
 import { WasmHelper } from "./WasmHelper";
 
 export class PrivateKey extends Secret {
@@ -46,7 +45,7 @@ export class PrivateKey extends Secret {
         this._obj.set(privateKey._obj);
     }
 
-    equals(o: Serializable): boolean {
+    equals(o: unknown): boolean {
         return o instanceof PrivateKey && super.equals(o);
     }
 

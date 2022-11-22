@@ -69,8 +69,8 @@ abstract class Account {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: Account): boolean {
-        return BufferUtils.equals(this.serialize(), o.serialize());
+    equals(o: unknown): boolean {
+        return o instanceof Account && BufferUtils.equals(this.serialize(), o.serialize());
     }
 
     toString() {

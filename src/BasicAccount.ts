@@ -33,7 +33,7 @@ export class BasicAccount extends Account {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: Account): boolean {
+    equals(o: unknown): boolean {
         return o instanceof BasicAccount
             && this._type === o._type
             && this._balance === o._balance;
