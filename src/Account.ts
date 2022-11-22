@@ -114,7 +114,7 @@ abstract class Account {
     //             throw new Account.BalanceError();
     //         }
     //         if (blockHeight < transaction.validityStartHeight
-    //             || blockHeight >= transaction.validityStartHeight + Policy.TRANSACTION_VALIDITY_WINDOW) { // TODO: Policy
+    //             || blockHeight >= transaction.validityStartHeight + Policy.TRANSACTION_VALIDITY_WINDOW) {
     //             throw new Account.ValidityError();
     //         }
     //         if (transactionsCache.containsTransaction(transaction)) {

@@ -3,6 +3,7 @@
 // export { CRC8 } from "./CRC8";
 export { GenesisConfig } from "./GenesisConfig";
 // export { NumberUtils } from "./NumberUtils";
+export { Policy } from "./Policy";
 // export { StringUtils } from "./StringUtils";
 // export { WasmHelper } from "./WasmHelper";
 
@@ -14,6 +15,7 @@ export { SerialBuffer } from "./SerialBuffer";
 // export { Serializable } from "./Serializable";
 
 export { Address } from "./Address";
+export { Commitment } from "./Commitment";
 export { CryptoUtils } from "./CryptoUtils";
 export { Entropy } from "./Entropy";
 export { ExtendedPrivateKey } from "./ExtendedPrivateKey";
@@ -25,11 +27,14 @@ export { MnemonicUtils } from "./MnemonicUtils";
 // export { PeerId } from "./PeerId";
 export { PrivateKey } from "./PrivateKey";
 export { PublicKey } from "./PublicKey";
+export { RandomSecret } from "./RandomSecret";
 export { Secret } from "./Secret";
 export { Signature } from "./Signature";
 export { SignatureProof } from "./SignatureProof";
 
 /* Must be defined at the end to not cause ordering problems */
+export { CommitmentPair } from "./CommitmentPair";
+
 export { Account } from "./Account"; // Needed for its namespace
 export { BasicAccount } from "./BasicAccount";
 
