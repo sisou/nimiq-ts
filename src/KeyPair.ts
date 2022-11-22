@@ -56,7 +56,7 @@ export class KeyPair extends Serializable {
         return new KeyPair(privateKey, publicKey, locked, lockSalt);
     }
 
-    serialize(buf: SerialBuffer): SerialBuffer {
+    serialize(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedSize);
         this._privateKey.serialize(buf);
         this.publicKey.serialize(buf);

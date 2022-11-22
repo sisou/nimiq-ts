@@ -24,6 +24,7 @@ export { KeyPair } from "./KeyPair";
 export { MerklePath } from "./MerklePath";
 export { MerkleTree } from "./MerkleTree";
 export { MnemonicUtils } from "./MnemonicUtils";
+export { MultiSigWallet } from "./MultiSigWallet";
 export { PartialSignature } from "./PartialSignature";
 // export { PeerId } from "./PeerId";
 export { PrivateKey } from "./PrivateKey";
@@ -32,6 +33,7 @@ export { RandomSecret } from "./RandomSecret";
 export { Secret } from "./Secret";
 export { Signature } from "./Signature";
 export { SignatureProof } from "./SignatureProof";
+export { Wallet } from "./Wallet";
 
 /* Must be defined at the end to not cause ordering problems */
 export { CommitmentPair } from "./CommitmentPair";
