@@ -14,7 +14,7 @@ export abstract class Contract extends Account {
         return true;
     }
 
-    withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): Account {
+    override withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): Account {
         if (!revert && transaction.hasFlag(Transaction.Flag.CONTRACT_CREATION)) {
             // Contract already created
             throw new Error('Data error');
@@ -23,7 +23,7 @@ export abstract class Contract extends Account {
     }
 
 
-    withContractCommand(transaction: Transaction, blockHeight: number, revert = false): Account {
+    override withContractCommand(transaction: Transaction, blockHeight: number, revert = false): Account {
         if (revert && transaction.hasFlag(Transaction.Flag.CONTRACT_CREATION)) {
             // Revert contract creation
             return new BasicAccount(this.balance);

@@ -6,7 +6,7 @@ import { SerialBuffer } from "./SerialBuffer";
 import { WasmHelper } from "./WasmHelper";
 
 export class PrivateKey extends Secret {
-    static SIZE = Secret.SIZE;
+    static override SIZE = Secret.SIZE;
     static PURPOSE_ID = 0x42000001;
 
     private _obj: Uint8Array;
@@ -45,7 +45,7 @@ export class PrivateKey extends Secret {
         this._obj.set(privateKey._obj);
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof PrivateKey && super.equals(o);
     }
 

@@ -23,7 +23,7 @@ export class ExtendedTransaction extends Transaction {
         super(Transaction.Format.EXTENDED, sender, senderType, recipient, recipientType, value, fee, validityStartHeight, flags, data, proof, networkId);
     }
 
-    static unserialize(buf: SerialBuffer): ExtendedTransaction {
+    static override unserialize(buf: SerialBuffer): ExtendedTransaction {
         const type = /** @type {Transaction.Format} */ buf.readUint8();
         Assert.that(type === Transaction.Format.EXTENDED);
 
@@ -43,7 +43,7 @@ export class ExtendedTransaction extends Transaction {
         return new ExtendedTransaction(sender, senderType, recipient, recipientType, value, fee, validityStartHeight, flags, data, proof, networkId);
     }
 
-    static fromPlain(plain: Record<string, any>): ExtendedTransaction {
+    static override fromPlain(plain: Record<string, any>): ExtendedTransaction {
         if (!plain) throw new Error('Invalid transaction format');
         return new ExtendedTransaction(
             Address.fromAny(plain.sender),
@@ -60,7 +60,7 @@ export class ExtendedTransaction extends Transaction {
         );
     }
 
-    serialize(buf?: SerialBuffer): SerialBuffer {
+    override serialize(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedSize);
         buf.writeUint8(Transaction.Format.EXTENDED);
         this.serializeContent(buf);
@@ -69,7 +69,7 @@ export class ExtendedTransaction extends Transaction {
         return buf;
     }
 
-    get serializedSize(): number {
+    override get serializedSize(): number {
         return /*type*/ 1
             + this.serializedContentSize
             + /*proofSize*/ 2

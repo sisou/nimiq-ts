@@ -27,7 +27,7 @@ export class RandomSecret extends Serializable {
         return RandomSecret.SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof RandomSecret && super.equals(o);
     }
 }

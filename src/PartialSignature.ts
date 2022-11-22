@@ -51,7 +51,7 @@ export class PartialSignature extends Serializable {
         return PartialSignature.SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof PartialSignature && super.equals(o);
     }
 

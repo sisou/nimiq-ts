@@ -53,7 +53,7 @@ export class Address extends Serializable {
         return Address.SERIALIZED_SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof Address
             && super.equals(o);
     }

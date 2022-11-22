@@ -5,7 +5,7 @@ import { Secret } from "./Secret";
 import { SerialBuffer } from "./SerialBuffer";
 
 export class Entropy extends Secret {
-    static SIZE = Secret.SIZE;
+    static override SIZE = Secret.SIZE;
     static PURPOSE_ID = 0x42000002;
 
     private _obj: Uint8Array;
@@ -52,7 +52,7 @@ export class Entropy extends Secret {
         this._obj.set(entropy._obj);
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof Entropy && super.equals(o);
     }
 }

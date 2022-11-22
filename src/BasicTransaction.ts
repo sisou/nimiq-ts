@@ -30,7 +30,7 @@ export class BasicTransaction extends Transaction {
         this._signatureProof = proof;
     }
 
-    static unserialize(buf: SerialBuffer): Transaction {
+    static override unserialize(buf: SerialBuffer): Transaction {
         const type = buf.readUint8();
         Assert.that(type === Transaction.Format.BASIC);
 
@@ -44,7 +44,7 @@ export class BasicTransaction extends Transaction {
         return new BasicTransaction(senderPubKey, recipient, value, fee, validityStartHeight, signature, networkId);
     }
 
-    static fromPlain(plain: Record<string, any>): BasicTransaction {
+    static override fromPlain(plain: Record<string, any>): BasicTransaction {
         if (!plain) throw new Error('Invalid transaction format');
         return new BasicTransaction(
             PublicKey.fromAny(plain.proof.publicKey || plain.senderPubKey),
@@ -57,7 +57,7 @@ export class BasicTransaction extends Transaction {
         );
     }
 
-    serialize(buf?: SerialBuffer): SerialBuffer {
+    override serialize(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedSize);
         buf.writeUint8(Transaction.Format.BASIC);
         this.senderPubKey.serialize(buf);
@@ -70,7 +70,7 @@ export class BasicTransaction extends Transaction {
         return buf;
     }
 
-    get serializedSize(): number {
+    override get serializedSize(): number {
         return /*type*/ 1
             + this.senderPubKey.serializedSize
             + this._recipient.serializedSize

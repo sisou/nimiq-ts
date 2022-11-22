@@ -19,7 +19,7 @@ export class SerialBuffer extends Uint8Array {
         this._writePos = 0;
     }
 
-    subarray(start?: number, end?: number): Uint8Array {
+    override subarray(start?: number, end?: number): Uint8Array {
         return ArrayUtils.subarray(this, start, end);
     }
 

@@ -168,7 +168,7 @@ export class KeyPair extends Serializable {
         return this._privateKey.encryptedSize;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof KeyPair && super.equals(o);
     }
 }

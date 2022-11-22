@@ -44,12 +44,12 @@ export class PeerId extends Serializable {
         return PeerId.SERIALIZED_SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof PeerId
             && super.equals(o);
     }
 
-    toString(): string {
+    override toString(): string {
         return this.toHex();
     }
 

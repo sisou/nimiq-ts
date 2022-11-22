@@ -58,7 +58,7 @@ export class PublicKey extends Serializable {
         return PublicKey.SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof PublicKey && super.equals(o);
     }
 
@@ -66,7 +66,7 @@ export class PublicKey extends Serializable {
         return Hash.blake2b(this.serialize());
     }
 
-    compare(o: PublicKey): number {
+    override compare(o: PublicKey): number {
         return BufferUtils.compare(this._obj, o._obj);
     }
 

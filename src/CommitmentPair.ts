@@ -58,7 +58,7 @@ export class CommitmentPair extends Serializable {
         return this.secret.serializedSize + this.commitment.serializedSize;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof CommitmentPair && super.equals(o);
     }
 

@@ -86,7 +86,7 @@ class Hash extends Serializable {
         return this._algorithm;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof Hash && o._algorithm === this._algorithm && super.equals(o);
     }
 

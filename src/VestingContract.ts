@@ -76,7 +76,7 @@ export class VestingContract extends Contract {
         return new VestingContract(balance, owner, vestingStart, vestingStepBlocks, vestingStepAmount, vestingTotalAmount);
     }
 
-    static unserialize(buf: SerialBuffer): VestingContract {
+    static override unserialize(buf: SerialBuffer): VestingContract {
         const type = buf.readUint8();
         if (type !== Account.Type.VESTING) throw new Error('Invalid account type');
 
@@ -89,7 +89,7 @@ export class VestingContract extends Contract {
         return new VestingContract(balance, owner, vestingStart, vestingStepBlocks, vestingStepAmount, vestingTotalAmount);
     }
 
-    static fromPlain(plain: Record<string, any>): VestingContract {
+    static override fromPlain(plain: Record<string, any>): VestingContract {
         if (!plain) throw new Error('Invalid account');
         return new VestingContract(plain.balance, Address.fromAny(plain.owner), plain.vestingStart, plain.vestingStepBlocks, plain.vestingStepAmount, plain.vestingTotalAmount);
     }
@@ -97,7 +97,7 @@ export class VestingContract extends Contract {
     /**
      * Serialize this VestingContract object into binary form.
      */
-    serialize(buf?: SerialBuffer): SerialBuffer {
+     override serialize(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedSize);
         super.serialize(buf);
         this._owner.serialize(buf);
@@ -108,7 +108,7 @@ export class VestingContract extends Contract {
         return buf;
     }
 
-    get serializedSize(): number {
+    override get serializedSize(): number {
         return super.serializedSize
             + this._owner.serializedSize
             + /*vestingStart*/ 4
@@ -137,11 +137,11 @@ export class VestingContract extends Contract {
         return this._vestingTotalAmount;
     }
 
-    toString(): string {
+    override toString(): string {
         return `VestingAccount{balance=${this._balance}, owner=${this._owner.toUserFriendlyAddress()}`;
     }
 
-    toPlain(): PlainVestingContract {
+    override toPlain(): PlainVestingContract {
         const plain = super.toPlain() as Partial<PlainVestingContract>;
         plain.owner = this.owner.toPlain();
         plain.vestingStart = this.vestingStart;
@@ -154,7 +154,7 @@ export class VestingContract extends Contract {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: unknown): boolean {
+     override equals(o: unknown): boolean {
         return o instanceof VestingContract
             && this._type === o._type
             && this._balance === o._balance
@@ -179,7 +179,7 @@ export class VestingContract extends Contract {
         return true;
     }
 
-    static verifyIncomingTransaction(transaction: Transaction): boolean {
+    static override verifyIncomingTransaction(transaction: Transaction): boolean {
         switch (transaction.data.length) {
             case Address.SERIALIZED_SIZE + 4:
             case Address.SERIALIZED_SIZE + 16:
@@ -190,7 +190,7 @@ export class VestingContract extends Contract {
         }
     }
 
-    withBalance(balance: number): VestingContract {
+    override withBalance(balance: number): VestingContract {
         return new VestingContract(balance, this._owner, this._vestingStart, this._vestingStepBlocks, this._vestingStepAmount, this._vestingTotalAmount);
     }
 
@@ -210,7 +210,7 @@ export class VestingContract extends Contract {
     //     return super.withOutgoingTransaction(transaction, blockHeight, transactionsCache, revert);
     // }
 
-    withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): VestingContract {
+    override withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): VestingContract {
         throw new Error('Illegal incoming transaction');
     }
 
@@ -221,7 +221,7 @@ export class VestingContract extends Contract {
     }
 
 
-    static dataToPlain(data: Uint8Array): Record<string, any> {
+    static override dataToPlain(data: Uint8Array): Record<string, any> {
         try {
             let vestingStart, vestingStepBlocks, vestingStepAmount, vestingTotalAmount;
             const buf = new SerialBuffer(data);
@@ -257,7 +257,7 @@ export class VestingContract extends Contract {
         }
     }
 
-    static proofToPlain(proof: Uint8Array): Record<string, any> {
+    static override proofToPlain(proof: Uint8Array): Record<string, any> {
         try {
             const signatureProof = SignatureProof.unserialize(new SerialBuffer(proof));
             return {

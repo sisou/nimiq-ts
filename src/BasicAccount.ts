@@ -17,7 +17,7 @@ export class BasicAccount extends Account {
         super(Account.Type.BASIC, balance);
     }
 
-    static unserialize(buf: SerialBuffer): BasicAccount {
+    static override unserialize(buf: SerialBuffer): BasicAccount {
         const type = buf.readUint8();
         if (type !== Account.Type.BASIC) throw new Error('Invalid account type');
 
@@ -25,7 +25,7 @@ export class BasicAccount extends Account {
         return new BasicAccount(balance);
     }
 
-    static fromPlain(o: Record<string, any>): BasicAccount {
+    static override fromPlain(o: Record<string, any>): BasicAccount {
         if (!o) throw new Error('Invalid account');
         return new BasicAccount(o.balance);
     }
@@ -33,13 +33,13 @@ export class BasicAccount extends Account {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: unknown): boolean {
+     override equals(o: unknown): boolean {
         return o instanceof BasicAccount
             && this._type === o._type
             && this._balance === o._balance;
     }
 
-    toString(): string {
+    override toString(): string {
         return `BasicAccount{balance=${this._balance}}`;
     }
 
@@ -52,7 +52,7 @@ export class BasicAccount extends Account {
         return true;
     }
 
-    withBalance(balance: number): BasicAccount {
+    override withBalance(balance: number): BasicAccount {
         return new BasicAccount(balance);
     }
 
@@ -87,15 +87,15 @@ export class BasicAccount extends Account {
     //     return this;
     // }
 
-    isInitial(): boolean {
+    override isInitial(): boolean {
         return this._balance === 0;
     }
 
-    static dataToPlain(data: Uint8Array): Record<string, any> {
+    static override dataToPlain(data: Uint8Array): Record<string, any> {
         return Account.dataToPlain(data);
     }
 
-    static proofToPlain(proof: Uint8Array): Record<string, any> {
+    static override proofToPlain(proof: Uint8Array): Record<string, any> {
         try {
             const signatureProof = SignatureProof.unserialize(new SerialBuffer(proof));
             return {

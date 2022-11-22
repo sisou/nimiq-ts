@@ -65,7 +65,7 @@ class HashedTimeLockedContract extends Contract {
         return new HashedTimeLockedContract(balance, sender, recipient, hashRoot, hashCount, timeout);
     }
 
-    static unserialize(buf: SerialBuffer): HashedTimeLockedContract {
+    static override unserialize(buf: SerialBuffer): HashedTimeLockedContract {
         const type = buf.readUint8();
         if (type !== Account.Type.HTLC) throw new Error('Invalid account type');
 
@@ -80,7 +80,7 @@ class HashedTimeLockedContract extends Contract {
         return new HashedTimeLockedContract(balance, sender, recipient, hashRoot, hashCount, timeout, totalAmount);
     }
 
-    static fromPlain(plain: Record<string, any>): HashedTimeLockedContract {
+    static override fromPlain(plain: Record<string, any>): HashedTimeLockedContract {
         if (!plain) throw new Error('Invalid account');
         return new HashedTimeLockedContract(plain.balance, Address.fromAny(plain.sender), Address.fromAny(plain.recipient), Hash.fromAny(plain.hashRoot, Hash.Algorithm.fromAny(plain.hashAlgorithm)), plain.hashCount, plain.timeout, plain.totalAmount);
     }
@@ -89,7 +89,7 @@ class HashedTimeLockedContract extends Contract {
     /**
      * Serialize this HTLC object into binary form.
      */
-    serialize(buf?: SerialBuffer): SerialBuffer {
+     override serialize(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedSize);
         super.serialize(buf);
         this._sender.serialize(buf);
@@ -102,7 +102,7 @@ class HashedTimeLockedContract extends Contract {
         return buf;
     }
 
-    get serializedSize(): number {
+    override get serializedSize(): number {
         return super.serializedSize
             + this._sender.serializedSize
             + this._recipient.serializedSize
@@ -141,11 +141,11 @@ class HashedTimeLockedContract extends Contract {
         return this._totalAmount;
     }
 
-    toString(): string {
+    override toString(): string {
         return `HashedTimeLockedContract{balance=${this._balance}, sender=${this._sender.toUserFriendlyAddress(false)}, recipient=${this._sender.toUserFriendlyAddress(false)}, amount=${this._totalAmount}/${this._hashCount}, timeout=${this._timeout}}`;
     }
 
-    toPlain(): PlainHashedTimeLockedContract {
+    override toPlain(): PlainHashedTimeLockedContract {
         const plain = super.toPlain() as Partial<PlainHashedTimeLockedContract>;
         plain.sender = this.sender.toPlain();
         plain.recipient = this.recipient.toPlain();
@@ -160,7 +160,7 @@ class HashedTimeLockedContract extends Contract {
     /**
      * Check if two Accounts are the same.
      */
-    equals(o: unknown): boolean {
+     override equals(o: unknown): boolean {
         return o instanceof HashedTimeLockedContract
             && this._type === o._type
             && this._balance === o._balance
@@ -230,7 +230,7 @@ class HashedTimeLockedContract extends Contract {
         }
     }
 
-    static verifyIncomingTransaction(transaction: Transaction): boolean {
+    static override verifyIncomingTransaction(transaction: Transaction): boolean {
         try {
             const buf = new SerialBuffer(transaction.data);
 
@@ -260,7 +260,7 @@ class HashedTimeLockedContract extends Contract {
         }
     }
 
-    withBalance(balance: number): HashedTimeLockedContract {
+    override withBalance(balance: number): HashedTimeLockedContract {
         return new HashedTimeLockedContract(balance, this._sender, this._recipient, this._hashRoot, this._hashCount, this._timeout, this._totalAmount);
     }
 
@@ -332,11 +332,11 @@ class HashedTimeLockedContract extends Contract {
     // }
 
 
-    withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): HashedTimeLockedContract {
+    override withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): HashedTimeLockedContract {
         throw new Error('Illegal incoming transaction');
     }
 
-    static dataToPlain(data: Uint8Array): Record<string, any> {
+    static override dataToPlain(data: Uint8Array): Record<string, any> {
         try {
             const buf = new SerialBuffer(data);
 
@@ -360,7 +360,7 @@ class HashedTimeLockedContract extends Contract {
         }
     }
 
-    static proofToPlain(proof: Uint8Array): Record<string, any> {
+    static override proofToPlain(proof: Uint8Array): Record<string, any> {
         try {
             const buf = new SerialBuffer(proof);
             const type = buf.readUint8();

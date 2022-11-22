@@ -87,7 +87,7 @@ export class ExtendedPrivateKey extends Serializable {
         return this._key.serializedSize + ExtendedPrivateKey.CHAIN_CODE_SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof ExtendedPrivateKey && super.equals(o);
     }
 

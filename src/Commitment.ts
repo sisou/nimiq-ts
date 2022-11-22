@@ -37,7 +37,7 @@ export class Commitment extends Serializable {
         return Commitment.SIZE;
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof Commitment && super.equals(o);
     }
 
