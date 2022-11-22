@@ -24,6 +24,7 @@ export { KeyPair } from "./KeyPair";
 export { MerklePath } from "./MerklePath";
 export { MerkleTree } from "./MerkleTree";
 export { MnemonicUtils } from "./MnemonicUtils";
+export { PartialSignature } from "./PartialSignature";
 // export { PeerId } from "./PeerId";
 export { PrivateKey } from "./PrivateKey";
 export { PublicKey } from "./PublicKey";

@@ -1,4 +1,6 @@
 import { BufferUtils } from "./BufferUtils";
+import { Commitment } from "./Commitment";
+import { PartialSignature } from "./PartialSignature";
 import { PrivateKey } from "./PrivateKey";
 import { PublicKey } from "./PublicKey";
 import { SerialBuffer } from "./SerialBuffer";
@@ -27,10 +29,10 @@ export class Signature extends Serializable {
         return new Signature(Signature._signatureCreate(privateKey.serialize(), publicKey.serialize(), data));
     }
 
-    // static fromPartialSignatures(commitment: Commitment, signatures: PartialSignature[]): Signature { // TODO: Commitment, PartialSignature
-    //     const raw = Signature._combinePartialSignatures(commitment.serialize(), signatures.map(s => s.serialize()));
-    //     return new Signature(raw);
-    // }
+    static fromPartialSignatures(commitment: Commitment, signatures: PartialSignature[]): Signature {
+        const raw = Signature._combinePartialSignatures(commitment.serialize(), signatures.map(s => s.serialize()));
+        return new Signature(raw);
+    }
 
     static unserialize(buf: SerialBuffer): Signature {
         return new Signature(buf.read(Signature.SIZE));
@@ -60,43 +62,43 @@ export class Signature extends Serializable {
         return Signature._signatureVerify(publicKey.serialize(), data, this._obj);
     }
 
-    equals(o: unknown): boolean {
+    override equals(o: unknown): boolean {
         return o instanceof Signature && super.equals(o);
     }
 
-    // private static _combinePartialSignatures(combinedCommitment: Uint8Array, partialSignatures: Uint8Array[]): Uint8Array {
-    //     const combinedSignature = Signature._aggregatePartialSignatures(partialSignatures);
-    //     return BufferUtils.concatTypedArrays(combinedCommitment, combinedSignature);
-    // }
+    private static _combinePartialSignatures(combinedCommitment: Uint8Array, partialSignatures: Uint8Array[]): Uint8Array {
+        const combinedSignature = Signature._aggregatePartialSignatures(partialSignatures);
+        return BufferUtils.concatTypedArrays(combinedCommitment, combinedSignature);
+    }
 
-    // private static _aggregatePartialSignatures(partialSignatures: Uint8Array[]): Uint8Array {
-    //     return partialSignatures.reduce((sigA, sigB) => Signature._scalarsAdd(sigA, sigB));
-    // }
+    private static _aggregatePartialSignatures(partialSignatures: Uint8Array[]): Uint8Array {
+        return partialSignatures.reduce((sigA, sigB) => Signature._scalarsAdd(sigA, sigB));
+    }
 
-    // private static _scalarsAdd(a: Uint8Array, b: Uint8Array): Uint8Array {
-    //     if (a.byteLength !== PartialSignature.SIZE || b.byteLength !== PartialSignature.SIZE) { // TODO: PartialSignature
-    //         throw Error('Wrong buffer size.');
-    //     }
-	// 	const Module = WasmHelper.Module;
-	// 	let stackPtr;
-	// 	try {
-	// 		stackPtr = Module.stackSave();
-	// 		const wasmOutSum = Module.stackAlloc(PartialSignature.SIZE);
-	// 		const wasmInA = Module.stackAlloc(a.length);
-	// 		const wasmInB = Module.stackAlloc(b.length);
-	// 		new Uint8Array(Module.HEAPU8.buffer, wasmInA, a.length).set(a);
-	// 		new Uint8Array(Module.HEAPU8.buffer, wasmInB, b.length).set(b);
-	// 		Module._ed25519_add_scalars(wasmOutSum, wasmInA, wasmInB);
-	// 		const sum = new Uint8Array(PartialSignature.SIZE);
-	// 		sum.set(new Uint8Array(Module.HEAPU8.buffer, wasmOutSum, PartialSignature.SIZE));
-	// 		return sum;
-	// 	} catch (e) {
-	// 		// Log.w(Signature, e); // TODO: Log
-	// 		throw e;
-	// 	} finally {
-	// 		if (stackPtr !== undefined) Module.stackRestore(stackPtr);
-	// 	}
-    // }
+    private static _scalarsAdd(a: Uint8Array, b: Uint8Array): Uint8Array {
+        if (a.byteLength !== PartialSignature.SIZE || b.byteLength !== PartialSignature.SIZE) {
+            throw Error('Wrong buffer size.');
+        }
+		const Module = WasmHelper.Module;
+		let stackPtr;
+		try {
+			stackPtr = Module.stackSave();
+			const wasmOutSum = Module.stackAlloc(PartialSignature.SIZE);
+			const wasmInA = Module.stackAlloc(a.length);
+			const wasmInB = Module.stackAlloc(b.length);
+			new Uint8Array(Module.HEAPU8.buffer, wasmInA, a.length).set(a);
+			new Uint8Array(Module.HEAPU8.buffer, wasmInB, b.length).set(b);
+			Module._ed25519_add_scalars(wasmOutSum, wasmInA, wasmInB);
+			const sum = new Uint8Array(PartialSignature.SIZE);
+			sum.set(new Uint8Array(Module.HEAPU8.buffer, wasmOutSum, PartialSignature.SIZE));
+			return sum;
+		} catch (e) {
+			// Log.w(Signature, e); // TODO: Log
+			throw e;
+		} finally {
+			if (stackPtr !== undefined) Module.stackRestore(stackPtr);
+		}
+    }
 
     static _signatureCreate(privateKey: Uint8Array, publicKey: Uint8Array, message: Uint8Array): Uint8Array {
         if (publicKey.byteLength !== PublicKey.SIZE
