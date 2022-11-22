@@ -23,9 +23,9 @@ abstract class Transaction {
 	protected _validityStartHeight: number;
 	protected _flags: Transaction.Flag;
 	protected _data: Uint8Array;
-	protected _proof?: Uint8Array;
+	protected _proof: Uint8Array;
 	protected _valid?: boolean;
-	protected _hash: Hash | null = null;
+	protected _hash?: Hash;
 
     constructor(
 		format: Transaction.Format,
@@ -38,7 +38,7 @@ abstract class Transaction {
 		validityStartHeight: number,
 		flags: Transaction.Flag,
 		data: Uint8Array,
-		proof?: Uint8Array,
+		proof: Uint8Array,
 		networkId: number = GenesisConfig.NETWORK_ID,
 	) {
         if (!(sender instanceof Address)) throw new Error('Malformed sender');
@@ -50,7 +50,7 @@ abstract class Transaction {
         if (!NumberUtils.isUint32(validityStartHeight)) throw new Error('Malformed validityStartHeight');
         if (!NumberUtils.isUint8(flags) && (flags & ~(Transaction.Flag.ALL)) > 0) throw new Error('Malformed flags');
         if (!(data instanceof Uint8Array) || !(NumberUtils.isUint16(data.byteLength))) throw new Error('Malformed data');
-        if (proof && (!(proof instanceof Uint8Array) || !(NumberUtils.isUint16(proof.byteLength)))) throw new Error('Malformed proof');
+        if (!(proof instanceof Uint8Array) || !(NumberUtils.isUint16(proof.byteLength))) throw new Error('Malformed proof');
         if (!NumberUtils.isUint8(networkId)) throw new Error('Malformed networkId');
 
         this._format = format;
@@ -216,11 +216,8 @@ abstract class Transaction {
     toPlain() {
         const data = Account.TYPE_MAP.get(this.recipientType)!.dataToPlain(this.data);
         data.raw = BufferUtils.toHex(this.data);
-        let proof: Record<string, any> | undefined;
-        if (this.proof) {
-            proof = Account.TYPE_MAP.get(this.senderType)!.proofToPlain(this.proof);
-            proof.raw = BufferUtils.toHex(this.proof);
-        }
+        const proof = Account.TYPE_MAP.get(this.senderType)!.proofToPlain(this.proof);
+        proof.raw = BufferUtils.toHex(this.proof);
         return {
             transactionHash: this.hash().toPlain(),
             format: Transaction.Format.toString(this._format),
@@ -258,7 +255,7 @@ abstract class Transaction {
     getContractCreationAddress(): Address {
         const tx = Transaction.unserialize(this.serialize());
         tx._recipient = Address.NULL;
-        tx._hash = null;
+        tx._hash = undefined;
         return Address.fromHash(tx.hash());
     }
 
@@ -314,12 +311,12 @@ abstract class Transaction {
         return this._data;
     }
 
-    get proof(): Uint8Array | undefined {
+    get proof(): Uint8Array {
         return this._proof;
     }
 
     // Sender proof is set by the Wallet after signing a transaction.
-    set proof(proof: Uint8Array | undefined) {
+    set proof(proof: Uint8Array) {
         this._proof = proof;
     }
 }

@@ -13,7 +13,6 @@ export { SerialBuffer } from "./SerialBuffer";
 // Base classes
 export { Serializable } from "./Serializable";
 
-export { Account } from "./Account";
 export { Address } from "./Address";
 export { CryptoUtils } from "./CryptoUtils";
 export { Entropy } from "./Entropy";
@@ -29,8 +28,15 @@ export { PublicKey } from "./PublicKey";
 export { Secret } from "./Secret";
 export { Signature } from "./Signature";
 export { SignatureProof } from "./SignatureProof";
-export { Transaction } from "./Transaction";
 
 // Must be defined at the end to not cause ordering problems
+export { Account } from "./Account"; // Needed for its namespace
 export { BasicAccount } from "./BasicAccount";
+
+// export { Contract } from "./Contract";
+export { VestingContract } from "./VestingContract";
+export { HashedTimeLockedContract } from "./HashedTimeLockedContract";
+
+export { Transaction } from "./Transaction"; // Needed for its namespace
 export { BasicTransaction } from "./BasicTransaction";
+export { ExtendedTransaction } from "./ExtendedTransaction";

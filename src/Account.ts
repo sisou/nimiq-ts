@@ -3,9 +3,14 @@ import { NumberUtils } from "./NumberUtils";
 import { SerialBuffer } from "./SerialBuffer";
 import { Transaction } from "./Transaction";
 
+export type PlainAccount = {
+    type: string,
+    balance: number,
+}
+
 abstract class Account {
 	static TYPE_MAP = new Map<Account.Type, {
-		copy: (o: Account) => Account,
+		copy?: (o: Account) => Account,
 		unserialize: (buf: SerialBuffer) => Account,
 		create?: (balance: number, blockHeight: number, transaction: Transaction) => Account,
 		verifyOutgoingTransaction: (transaction: Transaction) => boolean,
@@ -83,7 +88,7 @@ abstract class Account {
         return Account.TYPE_MAP.get(type)!.fromPlain(plain);
     }
 
-    toPlain() {
+    toPlain(): PlainAccount {
         return {
             type: Account.Type.toString(this.type),
             balance: this.balance
@@ -102,21 +107,14 @@ abstract class Account {
 		throw new Error('Not yet implemented.');
 	}
 
-    // /**
-    //  * @param {Transaction} transaction
-    //  * @param {number} blockHeight
-    //  * @param {TransactionCache} transactionsCache
-    //  * @param {boolean} [revert]
-    //  * @return {Account}
-    //  */
-    // withOutgoingTransaction(transaction, blockHeight, transactionsCache, revert = false) {
+    // withOutgoingTransaction(transaction: Transaction, blockHeight: number, transactionsCache: TransactionCache, revert = false): Account { // TODO: TransactionCache
     //     if (!revert) {
     //         const newBalance = this._balance - transaction.value - transaction.fee;
     //         if (newBalance < 0) {
     //             throw new Account.BalanceError();
     //         }
     //         if (blockHeight < transaction.validityStartHeight
-    //             || blockHeight >= transaction.validityStartHeight + Policy.TRANSACTION_VALIDITY_WINDOW) {
+    //             || blockHeight >= transaction.validityStartHeight + Policy.TRANSACTION_VALIDITY_WINDOW) { // TODO: Policy
     //             throw new Account.ValidityError();
     //         }
     //         if (transactionsCache.containsTransaction(transaction)) {
@@ -132,33 +130,21 @@ abstract class Account {
     //     }
     // }
 
-    // /**
-    //  * @param {Transaction} transaction
-    //  * @param {number} blockHeight
-    //  * @param {boolean} [revert]
-    //  * @return {Account}
-    //  */
-    // withIncomingTransaction(transaction, blockHeight, revert = false) {
-    //     if (!revert) {
-    //         return this.withBalance(this._balance + transaction.value);
-    //     } else {
-    //         const newBalance = this._balance - transaction.value;
-    //         if (newBalance < 0) {
-    //             throw new Account.BalanceError();
-    //         }
-    //         return this.withBalance(newBalance);
-    //     }
-    // }
+    withIncomingTransaction(transaction: Transaction, blockHeight: number, revert = false): Account {
+        if (!revert) {
+            return this.withBalance(this._balance + transaction.value);
+        } else {
+            const newBalance = this._balance - transaction.value;
+            if (newBalance < 0) {
+                throw new Account.BalanceError();
+            }
+            return this.withBalance(newBalance);
+        }
+    }
 
-    // /**
-    //  * @param {Transaction} transaction
-    //  * @param {number} blockHeight
-    //  * @param {boolean} [revert]
-    //  * @return {Account}
-    //  */
-    // withContractCommand(transaction, blockHeight, revert = false) {
-    //     throw new Error('Not yet implemented');
-    // }
+    withContractCommand(transaction: Transaction, blockHeight: number, revert = false): Account {
+        throw new Error('Not yet implemented');
+    }
 
     isInitial(): boolean {
         return this === Account.INITIAL;
