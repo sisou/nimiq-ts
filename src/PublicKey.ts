@@ -1,7 +1,6 @@
 import { Address } from "./Address";
 import { BufferUtils } from "./BufferUtils";
 import { Hash } from "./Hash";
-import { PeerId } from "./PeerId";
 import { PrivateKey } from "./PrivateKey";
 import { SerialBuffer } from "./SerialBuffer";
 import { Serializable } from "./Serializable";
@@ -72,10 +71,6 @@ export class PublicKey extends Serializable {
 
     toAddress(): Address {
         return Address.fromHash(this.hash());
-    }
-
-    toPeerId(): PeerId {
-        return new PeerId(this.hash().subarray(0, 16));
     }
 
     static _delinearizeAndAggregatePublicKeys(publicKeys: PublicKey[]): PublicKey {
