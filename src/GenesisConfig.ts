@@ -5,27 +5,32 @@ type Config = {
 
 export class GenesisConfig {
 	static CONFIGS: Record<string, Config> = {
-		'main': {
-			NETWORK_ID: 42,
-			NETWORK_NAME: 'main'
-		},
+		// 'main': {
+		// 	NETWORK_ID: 42,
+		// 	NETWORK_NAME: 'main'
+		// },
 
 		'test': {
-			NETWORK_ID: 1,
+			NETWORK_ID: 5,
 			NETWORK_NAME: 'test'
 		},
 
 		'dev': {
-			NETWORK_ID: 2,
+			NETWORK_ID: 6,
 			NETWORK_NAME: 'dev'
-		}
+		},
+
+		'unit': {
+			NETWORK_ID: 7,
+			NETWORK_NAME: 'unit'
+		},
 	}
 
 	static _config?: Config;
 
-    static main() {
-        GenesisConfig.init(GenesisConfig.CONFIGS['main']);
-    }
+    // static main() {
+    //     GenesisConfig.init(GenesisConfig.CONFIGS['main']);
+    // }
 
     static test() {
         GenesisConfig.init(GenesisConfig.CONFIGS['test']);
@@ -33,6 +38,10 @@ export class GenesisConfig {
 
     static dev() {
         GenesisConfig.init(GenesisConfig.CONFIGS['dev']);
+    }
+
+    static unit() {
+        GenesisConfig.init(GenesisConfig.CONFIGS['unit']);
     }
 
     static init(config: Config) {
