@@ -45,7 +45,7 @@ abstract class Transaction {
         if (!NumberUtils.isUint8(senderType)) throw new Error('Malformed sender type');
         if (!(recipient instanceof Address)) throw new Error('Malformed recipient');
         if (!NumberUtils.isUint8(recipientType)) throw new Error('Malformed recipient type');
-        if (!NumberUtils.isUint64(value) || value === 0) throw new Error('Malformed value');
+        if (!NumberUtils.isUint64(value) || (value === 0 && (flags & Transaction.Flag.SIGNALING) === 0)) throw new Error('Malformed value');
         if (!NumberUtils.isUint64(fee)) throw new Error('Malformed fee');
         if (!NumberUtils.isUint32(validityStartHeight)) throw new Error('Malformed validityStartHeight');
         if (!NumberUtils.isUint8(flags) && (flags & ~(Transaction.Flag.ALL)) > 0) throw new Error('Malformed flags');
@@ -307,6 +307,10 @@ abstract class Transaction {
         return (this._flags & flag) > 0;
     }
 
+    get isSignaling(): boolean {
+        return this.hasFlag(Transaction.Flag.SIGNALING);
+    }
+
     get data(): Uint8Array {
         return this._data;
     }
@@ -348,7 +352,8 @@ namespace Transaction {
 	export enum Flag {
 		NONE = 0,
 		CONTRACT_CREATION = 0b1,
-		ALL = 0b1,
+		SIGNALING = 0b10,
+		ALL = 0b11,
 	}
 }
 
