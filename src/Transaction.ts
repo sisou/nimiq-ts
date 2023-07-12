@@ -79,7 +79,7 @@ abstract class Transaction {
 
     serializeContent(buf?: SerialBuffer): SerialBuffer {
         buf = buf || new SerialBuffer(this.serializedContentSize);
-        buf.writeUint16(this._data.byteLength);
+        buf.writeVarUint(this._data.byteLength);
         buf.write(this._data);
         this._sender.serialize(buf);
         buf.writeUint8(this._senderType);

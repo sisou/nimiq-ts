@@ -27,7 +27,7 @@ export class ExtendedTransaction extends Transaction {
         const type = /** @type {Transaction.Format} */ buf.readUint8();
         Assert.that(type === Transaction.Format.EXTENDED);
 
-        const dataSize = buf.readUint16();
+        const dataSize = buf.readVarUint();
         const data = buf.read(dataSize);
         const sender = Address.unserialize(buf);
         const senderType = /** @type {Account.Type} */ buf.readUint8();
@@ -38,7 +38,7 @@ export class ExtendedTransaction extends Transaction {
         const validityStartHeight = buf.readUint32();
         const networkId = buf.readUint8();
         const flags = buf.readUint8();
-        const proofSize = buf.readUint16();
+        const proofSize = buf.readVarUint();
         const proof = buf.read(proofSize);
         return new ExtendedTransaction(sender, senderType, recipient, recipientType, value, fee, validityStartHeight, flags, data, proof, networkId);
     }
@@ -64,7 +64,7 @@ export class ExtendedTransaction extends Transaction {
         buf = buf || new SerialBuffer(this.serializedSize);
         buf.writeUint8(Transaction.Format.EXTENDED);
         this.serializeContent(buf);
-        buf.writeUint16(this._proof.byteLength);
+        buf.writeVarUint(this._proof.byteLength);
         buf.write(this._proof);
         return buf;
     }
