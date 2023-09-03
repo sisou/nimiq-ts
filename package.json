@@ -4,21 +4,23 @@
   "description": "Typescript library for Nimiq",
   "source": "src/index.ts",
   "main": "./dist/standard/umd/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "node": "./dist/node/cjs/index.js",
       "import": "./dist/standard/es/index.js",
-      "default": "./dist/standard/cjs/index.js"
+      "default": "./dist/standard/cjs/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./slim": {
       "node": "./dist/node/cjs/index.js",
       "import": "./dist/slim/es/index_slim.js",
-      "default": "./dist/slim/cjs/index_slim.js"
+      "default": "./dist/slim/cjs/index_slim.js",
+      "types": "./dist/index.d.ts"
     },
     "./nimiq.wasm": "./dist/nimiq.wasm",
     "./package.json": "./package.json"
   },
-  "types": "dist/index.d.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "node tests/keys.spec.js",
