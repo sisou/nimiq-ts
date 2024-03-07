@@ -62,7 +62,7 @@ class BufferUtils {
         return BufferUtils._BASE64_LOOKUP[num >> 18 & 0x3F] + BufferUtils._BASE64_LOOKUP[num >> 12 & 0x3F] + BufferUtils._BASE64_LOOKUP[num >> 6 & 0x3F] + BufferUtils._BASE64_LOOKUP[num & 0x3F];
     }
 
-    static _base64encodeChunk(u8: Uint8Array, start: number, end: number) {
+    static _base64encodeChunk(u8: Uint8Array, start: number, end: number): string {
         let tmp;
         const output = [];
         for (let i = start; i < end; i += 3) {
@@ -72,7 +72,7 @@ class BufferUtils {
         return output.join('');
     }
 
-    static _base64fromByteArray(u8: Uint8Array) {
+    static _base64fromByteArray(u8: Uint8Array): string {
         let tmp;
         const len = u8.length;
         const extraBytes = len % 3; // if we have 1 byte left, pad 2 bytes

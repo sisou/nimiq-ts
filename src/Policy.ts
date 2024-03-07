@@ -2,22 +2,22 @@ export class Policy {
 	/**
 	 * Targeted block time in seconds.
 	 */
-	static BLOCK_TIME = 60;
+	static BLOCK_TIME: number = 60;
 
 	/**
 	 * Maximum block size in bytes.
 	 */
-	static BLOCK_SIZE_MAX = 1e5; // 100 kb
+	static BLOCK_SIZE_MAX: number = 1e5; // 100 kb
 
 	/**
 	 * The highest (easiest) block PoW target.
 	 */
-	static BLOCK_TARGET_MAX = BigInt(2) ** BigInt(240);
+	static BLOCK_TARGET_MAX: bigint = BigInt(2) ** BigInt(240);
 
 	/**
 	 * Number of blocks we take into account to calculate next difficulty.
 	 */
-	static DIFFICULTY_BLOCK_WINDOW = 120;
+	static DIFFICULTY_BLOCK_WINDOW: number = 120;
 
 	/**
 	 * Limits the rate at which the difficulty is adjusted min/max.
@@ -27,7 +27,7 @@ export class Policy {
 	/**
 	 * Number of blocks a transaction is valid.
 	 */
-	static TRANSACTION_VALIDITY_WINDOW = 120;
+	static TRANSACTION_VALIDITY_WINDOW: number = 120;
 
 
 	/* Supply & Emission Parameters */
@@ -35,32 +35,32 @@ export class Policy {
 	/**
 	 * Number of Satoshis per Nimiq.
 	 */
-	static LUNAS_PER_COIN = 1e5;
+	static LUNAS_PER_COIN: number = 1e5;
 
 	/**
 	 * Targeted total supply in lunas.
 	 */
-	static TOTAL_SUPPLY = 21e14;
+	static TOTAL_SUPPLY: number = 21e14;
 
 	/**
 	 * Initial supply before genesis block in lunas.
 	 */
-	static INITIAL_SUPPLY = 252000000000000;
+	static INITIAL_SUPPLY: number = 252000000000000;
 
 	/**
 	 * Emission speed.
 	 */
-	static EMISSION_SPEED = Math.pow(2, 22);
+	static EMISSION_SPEED: number = Math.pow(2, 22);
 
 	/**
 	 * First block using constant tail emission until total supply is reached.
 	 */
-	static EMISSION_TAIL_START = 48692960;
+	static EMISSION_TAIL_START: number = 48692960;
 
 	/**
 	 * Constant tail emission in lunas until total supply is reached.
 	 */
-	static EMISSION_TAIL_REWARD = 4000;
+	static EMISSION_TAIL_REWARD: number = 4000;
 
 	/* Security parameters */
 
@@ -68,25 +68,25 @@ export class Policy {
 	 * NIPoPoW Security parameter M
 	 * FIXME naming
 	 */
-	static M = 240;
+	static M: number = 240;
 
 	/**
 	 * NIPoPoW Security parameter K
 	 * FIXME naming
 	 */
-	static K = 120;
+	static K: number = 120;
 
 	/**
 	 * NIPoPoW Security parameter DELTA
 	 * FIXME naming
 	 */
-	static DELTA = 0.15;
+	static DELTA: number = 0.15;
 
 	/**
 	 * Number of blocks the light client downloads to verify the AccountsTree construction.
 	 * FIXME naming
 	 */
-	static NUM_BLOCKS_VERIFICATION = 250;
+	static NUM_BLOCKS_VERIFICATION: number = 250;
 
 
 	/* Snapshot Parameters */
@@ -94,7 +94,7 @@ export class Policy {
 	/**
 	 * Maximum number of snapshots.
 	 */
-	static NUM_SNAPSHOTS_MAX = 20;
+	static NUM_SNAPSHOTS_MAX: number = 20;
 
 	/**
 	 * Stores the circulating supply before the given block.

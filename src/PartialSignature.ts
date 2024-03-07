@@ -25,7 +25,7 @@ export class PartialSignature extends Serializable {
 		secret: RandomSecret,
 		aggregateCommitment: Commitment,
 		data: Uint8Array,
-	) {
+	): PartialSignature {
         const raw = PartialSignature._delinearizedPartialSignatureCreate(
 			publicKeys.map(o => o.serialize()),
 			privateKey.serialize(),

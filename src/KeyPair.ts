@@ -150,7 +150,7 @@ export class KeyPair extends Serializable {
         return new PrivateKey(await CryptoUtils.otpKdfLegacy(this._privateKey.serialize(), key, this._lockSalt!, KeyPair.LOCK_KDF_ROUNDS));
     }
 
-    get isLocked() {
+    get isLocked(): boolean {
         return this._locked;
     }
 

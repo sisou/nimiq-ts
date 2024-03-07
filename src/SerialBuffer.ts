@@ -8,7 +8,7 @@ export class SerialBuffer extends Uint8Array {
     private _readPos: number;
     private _writePos: number;
 
-    static EMPTY = new SerialBuffer(0);
+    static EMPTY: SerialBuffer = new SerialBuffer(0);
 
     constructor(length: number);
     constructor(array: ArrayLike<number> | ArrayBufferLike);

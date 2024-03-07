@@ -7,10 +7,10 @@ import { NumberUtils } from "./NumberUtils";
 import { SerialBuffer } from "./SerialBuffer";
 
 abstract class Transaction {
-	static FORMAT_MAP = new Map<Transaction.Format, {
-		unserialize: (buf: SerialBuffer) => Transaction,
-		fromPlain: (plain:object) => Transaction,
-	}>();
+	static FORMAT_MAP: Map<Transaction.Format, {
+        unserialize: (buf: SerialBuffer) => Transaction;
+        fromPlain: (plain: object) => Transaction;
+    }> = new Map();
 
 	protected _format: Transaction.Format;
 	protected _sender: Address;
@@ -213,7 +213,24 @@ abstract class Transaction {
             + `}`;
     }
 
-    toPlain() {
+    toPlain(): {
+        transactionHash: string;
+        format: string;
+        sender: string;
+        senderType: string;
+        recipient: string;
+        recipientType: string;
+        value: number;
+        fee: number;
+        feePerByte: number;
+        validityStartHeight: number;
+        network: string;
+        flags: number;
+        data: Record<string, any>;
+        proof: Record<string, any>;
+        size: number;
+        valid: boolean;
+    } {
         const data = Account.TYPE_MAP.get(this.recipientType)!.dataToPlain(this.data);
         data.raw = BufferUtils.toHex(this.data);
         const proof = Account.TYPE_MAP.get(this.senderType)!.proofToPlain(this.proof);

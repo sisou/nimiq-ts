@@ -9,7 +9,7 @@ export type PlainAccount = {
 }
 
 abstract class Account {
-	static TYPE_MAP = new Map<Account.Type, {
+	static TYPE_MAP: Map<Account.Type, {
 		copy?: (o: Account) => Account,
 		unserialize: (buf: SerialBuffer) => Account,
 		create?: (balance: number, blockHeight: number, transaction: Transaction) => Account,
@@ -18,13 +18,13 @@ abstract class Account {
 		fromPlain: (o: object) => Account,
 		dataToPlain: (data: Uint8Array) => Record<string, any>,
 		proofToPlain: (proof: Uint8Array) => Record<string, any>,
-	}>();
+	}> = new Map();
     static INITIAL: Account;
 
-	static BalanceError = class extends Error { constructor() { super('Balance Error!'); }};
-	static DoubleTransactionError = class extends Error { constructor() { super('Double Transaction Error!'); }};
-	static ProofError = class extends Error { constructor() { super('Proof Error!'); }};
-	static ValidityError = class extends Error { constructor() { super('Validity Error!'); }};
+	static BalanceError: any = class extends Error { constructor() { super('Balance Error!'); }};
+	static DoubleTransactionError: any = class extends Error { constructor() { super('Double Transaction Error!'); }};
+	static ProofError: any = class extends Error { constructor() { super('Proof Error!'); }};
+	static ValidityError: any = class extends Error { constructor() { super('Validity Error!'); }};
 
 	protected _type: Account.Type;
 	protected _balance: number;
@@ -73,7 +73,7 @@ abstract class Account {
         return o instanceof Account && BufferUtils.equals(this.serialize(), o.serialize());
     }
 
-    toString() {
+    toString(): string {
         return `Account{type=${this._type}, balance=${this._balance.toString()}`;
     }
 

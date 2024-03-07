@@ -5,7 +5,7 @@ import { Serializable } from "./Serializable";
 import { WasmHelper } from "./WasmHelper";
 
 class Hash extends Serializable {
-    static SIZE = new Map<Hash.Algorithm, number>();
+    static SIZE: Map<Hash.Algorithm, number> = new Map();
     static NULL: Hash;
 
     private _obj: Uint8Array;

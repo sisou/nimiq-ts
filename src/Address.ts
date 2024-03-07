@@ -7,8 +7,8 @@ export class Address extends Serializable {
     static CCODE = 'NQ';
     static SERIALIZED_SIZE = 20;
     static HEX_SIZE = 40;
-    static NULL = new Address(new Uint8Array(Address.SERIALIZED_SIZE));
-    static CONTRACT_CREATION = new Address(new Uint8Array(Address.SERIALIZED_SIZE));
+    static NULL: Address = new Address(new Uint8Array(Address.SERIALIZED_SIZE));
+    static CONTRACT_CREATION: Address = new Address(new Uint8Array(Address.SERIALIZED_SIZE));
 
     static copy(o: Address): Address {
         if (!o) return o;
